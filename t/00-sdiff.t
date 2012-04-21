@@ -8,7 +8,7 @@ use Template::Reverse;
 
 sub dd{
     my ($a,$b) = @_;
-    return Template::Reverse::dd($a,$b);
+    return Template::Reverse::_diff($a,$b);
 }
 
 my (@seq1,@seq2,@exp,$diff);

@@ -4,7 +4,7 @@ use Template::Reverse;
 
 sub space{
     my $str = shift;
-    return Template::Reverse::space($str);
+    return Template::Reverse::_space($str);
 }
 
 $m1 = space("ABC DEF HIJ");

@@ -3,7 +3,8 @@ use warnings;
 package Template::Reverse;
 # ABSTRACT: turns baubles into trinkets
 use Algorithm::Diff qw(LCS LCS_length LCSidx diff sdiff compact_diff traverse_sequences traverse_balanced);
-sub dd{
+
+sub _diff{
     my ($a,$b) = @_;
 
     my @d = sdiff($a,$b);
@@ -22,22 +23,22 @@ sub dd{
     return \@rr;
 }
 
-sub makeMap{
+sub _make_map{
     my @asc = qw(a b c d e f g h i j k l m n o p q r s t u v w x y z 0 1 2 3 4 5 6 7 8 9 );
     my $str = shift;
-    my $spaced = space($str);
+    my $spaced = _space($str);
     my @chunk = split(/\s+/,$spaced);
 
     my $out='';
     foreach my $c (@chunk)
     {
-        my $sum=checksum($c);
+        my $sum=_checksum($c);
         $out.= $asc[$sum % @asc];
     }
     return $out;
 }
 
-sub space{
+sub _space{
     my $str = shift;
     $str =~ s/(\d[\d,]*(\.\d+)?)(\D)/$1 $3/gm;
     $str =~ s/([^,.\d])(\d[\d,]*(\.\d+)?)/$1 $2/gm;
@@ -47,7 +48,7 @@ sub space{
     return $str;
 }
 
-sub checksum{
+sub _checksum{
     my $str = shift;
     my $sum = 0;
     map{$sum+=ord($_)}split(//,$str);
