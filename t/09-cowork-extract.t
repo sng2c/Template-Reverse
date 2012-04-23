@@ -26,13 +26,13 @@ $str1 = "A B C D E F";
 $str2 = "A B C E F";
 $parts = $rev->detect($str1,$str2);
 @temps = Template::Reverse::Converter::TT2::Convert($parts);
-ok( eq_array( \@temps, ['A B C [% data1 %] E F'] ));
+ok( eq_array( \@temps, ['A B C [% value %] E F'] ));
 
 $temp = $temps[0];
 $extres = $ext->extract($temp,$str1);
-is $extres->{'data1'}, 'D';
+is $extres->{'value'}, 'D';
 $extres = $ext->extract($temp,$str2);
-is $extres->{'data1'}, undef;
+is $extres->{'value'}, undef;
 
 
 
@@ -42,13 +42,13 @@ $str1 = "가격 1200 원";
 $str2 = "가격 1300 원";
 $parts = $rev->detect($str1,$str2);
 @temps = Template::Reverse::Converter::TT2::Convert($parts);
-ok( eq_array( \@temps, ['가격 [% data1 %] 원'] ));
+ok( eq_array( \@temps, ['가격 [% value %] 원'] ));
 
 $temp = $temps[0];
 $extres = $ext->extract($temp,$str1);
-is $extres->{'data1'}, '1200';
+is $extres->{'value'}, '1200';
 $extres = $ext->extract($temp,$str2);
-is $extres->{'data1'}, '1300';
+is $extres->{'value'}, '1300';
 
 
 
@@ -57,13 +57,13 @@ $str1 = "가격 1200원";
 $str2 = "가격 1300원";
 $parts = $rev->detect($str1,$str2);
 @temps = Template::Reverse::Converter::TT2::Convert($parts);
-ok( eq_array( \@temps, ['가격 [% data1 %] 원'] ));
+ok( eq_array( \@temps, ['가격 [% value %] 원'] ));
 
 $temp = $temps[0];
 $extres = $ext->extract($temp,$rev->space($str1));
-is $extres->{'data1'}, '1200';
+is $extres->{'value'}, '1200';
 $extres = $ext->extract($temp,$rev->space($str2));
-is $extres->{'data1'}, '1300';
+is $extres->{'value'}, '1300';
 
 
 $str1 = "I am perl, and I am smart";
@@ -77,11 +77,11 @@ print Dumper \@temps;
 my $r = $ext->extract($temps[0],$rev->space($str3));
 TODO:{
     local $TODO="need to sigil spacer";
-    is $r->{'data1'},'king of the world';
+    is $r->{'value'},'king of the world';
 }
 
 $r = $ext->extract($temps[1],$rev->space($str3));
-is $r->{'data2'},'a richest man';
+is $r->{'value'},'a richest man';
 
 
 done_testing();

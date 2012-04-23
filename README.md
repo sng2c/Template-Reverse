@@ -27,8 +27,8 @@ more
     # generating patterns automatically!!
     my $str1 = "I am perl and smart";
     my $str2 = "I am khs and a perlmania";
-    $parts = $rev->detect($str1, $str2);
-    @temps = Template::Reverse::Converter::TT2::Convert($parts); # equals ('I am [% data1 %] and','and [% data2 %]')
+    my $parts = $rev->detect($str1, $str2);
+    my @temps = Template::Reverse::Converter::TT2::Convert($parts); # equals ('I am [% data1 %] and','and [% data2 %]')
 
 
     # spacing text for normalization.
@@ -38,10 +38,10 @@ more
     # extract!!
     use Template::Extract;
     my $ext = Template::Extract->new;
-    my $data1 = $ext->extract($temps[0], $str3spaced));
-    print Dumper($data1); # output : {'data1'=>'king of the world'}
+    my $data1 = $ext->extract($temps[0], $str3spaced);
+    print Dumper($data1); # output : {'value'=>'king of the world'}
 
-    my $data2 = $ext->extract($temps[1], $str3spaced));
-    print Dumper($data2); # output : {'data2'=>'a richest man'}
+    my $data2 = $ext->extract($temps[1], $str3spaced);
+    print Dumper($data2); # output : {'value'=>'a richest man'}
 
 
