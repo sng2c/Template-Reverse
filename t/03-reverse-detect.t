@@ -1,6 +1,8 @@
 use Test::More;
 
-use Template::Reverse;
+BEGIN{
+use_ok('Template::Reverse');
+}
 use Data::Dumper;
 sub detect{
     my $diff= shift;

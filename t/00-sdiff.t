@@ -2,9 +2,8 @@ use Test::More ;
 use Data::Dumper;
 
 BEGIN{
+use_ok("Template::Reverse");
 };
-
-use Template::Reverse;
 
 sub dd{
     my ($a,$b) = @_;

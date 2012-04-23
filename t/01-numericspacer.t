@@ -1,6 +1,8 @@
 use Test::More;
 
-use Template::Reverse::Spacer::Numeric;
+BEGIN{
+use_ok("Template::Reverse::Spacer::Numeric");
+};
 
 sub space{
     my $str = shift;
