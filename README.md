@@ -37,7 +37,7 @@ And it can makes an output marked differences, encodes to TT2 format for being u
     my $ext = Template::Extract->new;
     my $data1 = $ext->extract($temps[0], $str3spaced));
     print Dumper($data1);
-    my $data2 = $ext->extract($temps[0], $str3spaced));
+    my $data2 = $ext->extract($temps[1], $str3spaced));
     print Dumper($data2);
 
 
