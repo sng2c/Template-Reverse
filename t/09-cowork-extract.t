@@ -3,12 +3,15 @@ use warnings;
 use Test::More;
 use Data::Dumper;
 BEGIN{
-use_ok('Template::Reverse');
-use_ok('Template::Reverse::Converter::TT2');
 };
 eval "use Template::Extract;";
-plan skip_all => "Template::Extract required for testing compilation" if $@;
+if($@){
+    plan skip_all => "Template::Extract required for testing compilation";
+    done_testing();
+}
 
+use Template::Reverse;
+use Template::Reverse::Converter::TT2;
 my $rev = Template::Reverse->new({
     spacers=>['Template::Reverse::Spacer::Numeric'], # at first spacing/unspacing text by
 });
