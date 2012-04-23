@@ -1,10 +1,10 @@
 use Test::More;
 
-use Template::Reverse;
+use Template::Reverse::Spacer::Numeric;
 
 sub space{
     my $str = shift;
-    return Template::Reverse::_space($str);
+    return Template::Reverse::Spacer::Numeric->Space($str);
 }
 
 $m1 = space("ABC DEF HIJ");

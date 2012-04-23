@@ -15,7 +15,7 @@ my (@seq1,@seq2,@exp,$diff);
 
 @seq1 = qw( A B C D E F );
 @seq2 = qw( A B C D E F );
-@exp  = qw( A B C D E F );
+@exp  = qw( -A -B -C -D -E -F );
 $diff = dd(\@seq1,\@seq2);
 ok eq_array($diff, \@exp), 'sdiff test';
 $diff = dd(\@seq2,\@seq1);
@@ -24,7 +24,7 @@ ok eq_array($diff, \@exp), 'sdiff test';
 
 @seq1 = qw( A B C D E F );
 @seq2 = qw( A B C   E F );
-@exp  = qw( A B C * E F );
+@exp  = qw( -A -B -C * -E -F );
 $diff = dd(\@seq1,\@seq2);
 ok eq_array($diff, \@exp), 'sdiff test';
 $diff = dd(\@seq2,\@seq1);
@@ -32,7 +32,7 @@ ok eq_array($diff, \@exp), 'sdiff test';
 
 @seq1 = qw( A B C D E F );
 @seq2 = qw( A B     E F );
-@exp  = qw( A B * E F );
+@exp  = qw( -A -B * -E -F );
 $diff = dd(\@seq1,\@seq2);
 ok eq_array($diff, \@exp), 'sdiff test';
 $diff = dd(\@seq2,\@seq1);
@@ -40,7 +40,7 @@ ok eq_array($diff, \@exp), 'sdiff test';
 
 @seq1 = qw( A B C D E F );
 @seq2 = qw( B     E F );
-@exp  = qw( * B * E F );
+@exp  = qw( * -B * -E -F );
 $diff = dd(\@seq1,\@seq2);
 ok eq_array($diff, \@exp), 'sdiff test';
 $diff = dd(\@seq2,\@seq1);
@@ -48,7 +48,7 @@ ok eq_array($diff, \@exp), 'sdiff test';
 
 @seq1 = qw( A B C D E F );
 @seq2 = qw(   B C D E );
-@exp  = qw( * B C D E * );
+@exp  = qw( * -B -C -D -E * );
 $diff = dd(\@seq1,\@seq2);
 ok eq_array($diff, \@exp), 'sdiff test';
 $diff = dd(\@seq2,\@seq1);
@@ -56,7 +56,7 @@ ok eq_array($diff, \@exp), 'sdiff test';
 
 @seq1 = qw( A B C D E F );
 @seq2 = qw(   B C   E );
-@exp  = qw( * B C * E * );
+@exp  = qw( * -B -C * -E * );
 $diff = dd(\@seq1,\@seq2);
 ok eq_array($diff, \@exp), 'sdiff test';
 $diff = dd(\@seq2,\@seq1);
