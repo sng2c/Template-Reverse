@@ -28,7 +28,8 @@ more
     my $str1 = "I am perl and smart";
     my $str2 = "I am khs and a perlmania";
     $parts = $rev->detect($str1, $str2);
-    @temps = Template::Reverse::Converter::TT2::Convert($parts);
+    @temps = Template::Reverse::Converter::TT2::Convert($parts); # equals ('I am [% data1 %] and','and [% data2 %]')
+
 
     # spacing text for normalization.
     my $str3 = "I am king of the world and a richest man";
@@ -38,8 +39,9 @@ more
     use Template::Extract;
     my $ext = Template::Extract->new;
     my $data1 = $ext->extract($temps[0], $str3spaced));
-    print Dumper($data1);
+    print Dumper($data1); # output : {'data1'=>'king of the world'}
+
     my $data2 = $ext->extract($temps[1], $str3spaced));
-    print Dumper($data2);
+    print Dumper($data2); # output : {'data2'=>'a richest man'}
 
 
