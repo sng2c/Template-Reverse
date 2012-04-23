@@ -15,9 +15,11 @@ And it can makes an output marked differences, encodes to TT2 format for being u
     use Template::Reverse::Converter::TT2;
     my @templates = Template::Reverse::TT2Converter::Convert($parts); # named 'value1','value2',...
 
+more
 
     # try this!!
     use Template::Reverse;
+    use Template::Reverse::Converter::TT2;
     use Data::Dumper;
 
     my $rev = Template::Reverse->new;
