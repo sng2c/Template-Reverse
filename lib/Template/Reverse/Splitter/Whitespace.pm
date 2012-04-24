@@ -1,6 +1,6 @@
 package Template::Reverse::Splitter::Whitespace;
-use Moose;
-our $VERSION = '0.001';
+use Any::Moose;
+our $VERSION = '0.002';
 sub Split{
     my $self = shift;
     my $str = shift;

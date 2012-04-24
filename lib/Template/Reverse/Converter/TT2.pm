@@ -1,7 +1,7 @@
 package Template::Reverse::Converter::TT2;
 
-use Moose;
-our $VERSION = '0.001';
+use Any::Moose;
+our $VERSION = '0.002';
 sub Convert{
     my $self = shift;
     my $parts = shift;

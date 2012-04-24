@@ -1,6 +1,6 @@
 package Template::Reverse::Spacer::Numeric;
-use Moose;
-our $VERSION = '0.001';
+use Any::Moose;
+our $VERSION = '0.002';
 sub Space{
     my $self = shift;
     my $str = shift;
