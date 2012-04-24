@@ -1,8 +1,9 @@
 package Template::Reverse;
 use Any::Moose;
+use namespace::autoclean;
 use Module::Load;
 use Carp;
-our $VERSION = '0.002';
+our $VERSION = '0.003';
 
 
 has 'splitter' => (
@@ -222,4 +223,6 @@ Text are processed by Spacers in order.
 Finding parts in texts, you must use this function with the texts.
 
 =cut
+
+__PACKAGE__->meta->make_immutable;
 1;

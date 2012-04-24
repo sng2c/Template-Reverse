@@ -1,6 +1,8 @@
 package Template::Reverse::Spacer::Numeric;
 use Any::Moose;
-our $VERSION = '0.002';
+use namespace::autoclean;
+
+our $VERSION = '0.003';
 sub Space{
     my $self = shift;
     my $str = shift;
@@ -30,6 +32,5 @@ Template::Reverse::Spacer::Numeric - Insert spaces around Numeric word.
 
 =cut
 
-
-
+__PACKAGE__->meta->make_immutable;
 1;
