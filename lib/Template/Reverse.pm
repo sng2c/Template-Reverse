@@ -201,8 +201,11 @@ And it can makes an output marked differences, encodes to TT2 format for being u
 
 =head3 new({spacers=>[$spacer_package1, ...], splitter=>$splitter_package})
 
-Spacers have order.
+=head4 spacers=>[$spacer_pakcage, ...]
 
+=head4 splitter=>$splitter_package
+
+=head4 sidelen=>$max_length_of_each_side
 
 =head3 detect($text1, $text2)
 
@@ -212,18 +215,18 @@ It returns like below
     $rev->detect('A b C','A d C');
     #
     # [ [ ['A'],['C'] ] ]
-    #   | |___| |___| |     
-    #   |  pre  post  |
-    #   |_____________|  
+    #   : :...: :...: :     
+    #   :  pre  post  :
+    #   :.............:  
     #       part 1
     #
 
     $rev->detect('A b C d E','A f C g E');
     #
     # [ [ ['A'], ['C'] ], [ ['C'], ['E'] ] ]
-    #   | |___|  |___| |  | |___|  |___| |
-    #   |  pre   post  |  |  pre   post  |
-    #   |______________|  |______________|
+    #   : :...:  :...: :  : :...:  :...: :
+    #   :  pre   post  :  :  pre   post  :
+    #   :..............:  :..............:
     #        part 1            part 2
     #
 
@@ -237,9 +240,9 @@ It returns like below
     my $parts = $rev->detect($str1, $str2);
     #
     # [ [ ['I','am'], ['and'] ] , [ ['and'],[] ] ]
-    #   | |________|  |_____| |   |            |
-    #   |    pre       post   |   |            |
-    #   |_____________________|   |____________|
+    #   : :........:  :.....: :   :            :
+    #   :    pre       post   :   :            :
+    #   :.....................:   :............:
     #           part 1                part 2
     #
 
