@@ -11,12 +11,18 @@ sub Space{
 
 sub _space{
     my $str = shift;
-    $str =~ s/(\d[\d,]*(\.\d+)?)(\D)/$1 $3/gm;
-    $str =~ s/([^,.\d])(\d[\d,]*(\.\d+)?)/$1 $2/gm;
+    $str =~ s/([\d\.,]*\d)/_num($`,$1,$')/gme;
     $str =~ s/\s+/ /g;
     $str =~ s/^\s//g;
     $str =~ s/\s$//g;
     return $str;
+}
+
+sub _num{
+    my ($p,$m,$n) = @_;
+    $m =~ s/^[\.,]/$& /;
+    $m =~ s/[\.,]$/ $&/;      
+    return " $m ";
 }
 =pod
 

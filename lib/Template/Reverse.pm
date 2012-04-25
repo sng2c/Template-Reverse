@@ -3,7 +3,7 @@ use Any::Moose;
 use namespace::autoclean;
 use Module::Load;
 use Carp;
-our $VERSION = '0.003';
+our $VERSION = '0.004';
 
 
 has 'splitter' => (
