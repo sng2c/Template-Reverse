@@ -3,7 +3,7 @@ use Any::Moose;
 use namespace::autoclean;
 use Module::Load;
 use Carp;
-our $VERSION = '0.004';
+our $VERSION = '0.005';
 
 
 has 'splitter' => (
@@ -196,19 +196,39 @@ Spacers have order.
 Get changable part list from two texts.
 It returns like below
 
-    $rev->detect('A B C','A D C');
+    $rev->detect('A b C','A d C');
+    #
     # [ [ ['A'],['C'] ] ]
-    #     ~~~~~         pre texts
-    #           ~~~~~   post texts
-    #   ~~~~~~~~~~~~~~~ part1
+    #   | |___| |___| |     
+    #   |  pre  post  |
+    #   |_____________|  
+    #       part 1
+    #
 
-    $rev->detect('A B C D E','A D C F E');
-    # [ [ ['A'],['C'] ], [ ['C'], ['E'] ] ]
-    #   ~~~~~~~~~~~~~~~                     part1
-    #                    ~~~~~~~~~~~~~~~~   part2
+    $rev->detect('A b C d E','A f C g E');
+    #
+    # [ [ ['A'], ['C'] ], [ ['C'], ['E'] ] ]
+    #   | |___|  |___| |  | |___|  |___| |
+    #   |  pre   post  |  |  pre   post  |
+    #   |______________|  |______________|
+    #        part 1            part 2
+    #
 
     $rev->detect('A1 A2 B C1 C2 D E1 E2','A1 A2 D C1 C2 F E1 E2');
+    #
     # [ [ ['A1','A2'],['C2','C2'] ], [ ['C1','C2'], ['E2','E2'] ] ]
+    #
+
+    my $str1 = "I am perl and smart";
+    my $str2 = "I am KHS and a perlmania";
+    my $parts = $rev->detect($str1, $str2);
+    #
+    # [ [ ['I','am'], ['and'] ] , [ ['and'],[] ] ]
+    #   | |________|  |_____| |   |            |
+    #   |    pre       post   |   |            |
+    #   |_____________________|   |____________|
+    #           part 1                part 2
+    #
 
 Returned arrayRef is list of changable parts.
 

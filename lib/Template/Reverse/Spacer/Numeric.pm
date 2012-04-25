@@ -2,7 +2,7 @@ package Template::Reverse::Spacer::Numeric;
 use Any::Moose;
 use namespace::autoclean;
 
-our $VERSION = '0.003';
+our $VERSION = '0.004';
 sub Space{
     my $self = shift;
     my $str = shift;
@@ -29,6 +29,10 @@ sub _num{
 =head1 NAME
 
 Template::Reverse::Spacer::Numeric - Insert spaces around Numeric word.
+
+=head1 VERSION
+
+0.0004
 
 =head1 SYNOPSIS
     

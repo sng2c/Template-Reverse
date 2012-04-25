@@ -2,7 +2,7 @@ package Template::Reverse::Spacer::Punctuation;
 use Any::Moose;
 use namespace::autoclean;
 
-our $VERSION = '0.001';
+our $VERSION = '0.004';
 sub Space{
     my $self = shift;
     my $str = shift;
@@ -34,6 +34,10 @@ sub _punc{
 =head1 NAME
 
 Template::Reverse::Spacer::Punctuation - Insert spaces around punctuations.
+
+=head1 VERSION
+
+0.0004
 
 =head1 SYNOPSIS
     
