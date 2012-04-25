@@ -1,4 +1,7 @@
 package Template::Reverse::Splitter::Whitespace;
+
+# ABSTRACT: Split text by whitespace
+
 use Any::Moose;
 use namespace::autoclean;
 
@@ -11,8 +14,6 @@ sub Split{
 }
 
 =pod
-=head1 NAME
-Template::Reverse::Splitter::Whitespace - Split text by whitespace
 
 =head1 SYNOPSIS
  
@@ -21,5 +22,6 @@ Template::Reverse::Splitter::Whitespace - Split text by whitespace
     $num->Split('1,000 dollers'); # ('1,000', 'dollers')
 
 =cut
+
 __PACKAGE__->meta->make_immutable;
 1;

@@ -1,4 +1,7 @@
 package Template::Reverse::Spacer::Numeric;
+
+# ABSTRACT: Insert spaces around Numeric word.
+
 use Any::Moose;
 use namespace::autoclean;
 
@@ -26,10 +29,6 @@ sub _num{
     return " $m ";
 }
 =pod
-
-=head1 NAME
-
-Template::Reverse::Spacer::Numeric - Insert spaces around Numeric word.
 
 =head1 SYNOPSIS
     

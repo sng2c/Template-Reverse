@@ -1,4 +1,7 @@
 package Template::Reverse;
+
+# ABSTRACT: A template generator getting different parts between pair of text
+
 use Any::Moose;
 use namespace::autoclean;
 use Module::Load;
@@ -144,9 +147,7 @@ sub _checksum{
 
 =pod
 
-=head1 NAME
-
-Template::Reverse - A template generator getting different parts between pair of text
+Template::Reverse - 
 
 =head1 SYNOPSIS
 
@@ -268,9 +269,8 @@ L<Template::Extract>
 
 L<https://github.com/sng2c/Template-Reverse>
 
-# COPYRIGHT
-
 =cut
+
 
 __PACKAGE__->meta->make_immutable;
 1;

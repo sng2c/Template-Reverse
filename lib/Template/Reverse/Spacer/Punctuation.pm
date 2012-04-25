@@ -1,4 +1,7 @@
 package Template::Reverse::Spacer::Punctuation;
+
+# ABSTRACT: Insert spaces around punctuations.
+
 use Any::Moose;
 use namespace::autoclean;
 
@@ -31,10 +34,6 @@ sub _punc{
 }
 
 =pod
-
-=head1 NAME
-
-Template::Reverse::Spacer::Punctuation - Insert spaces around punctuations.
 
 =head1 SYNOPSIS
     

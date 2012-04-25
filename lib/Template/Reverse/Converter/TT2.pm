@@ -1,8 +1,12 @@
 package Template::Reverse::Converter::TT2;
 
+# ABSTRACT: Convert parts to TT2 format simply
+
 use Any::Moose;
 use namespace::autoclean;
+
 # VERSION
+
 sub Convert{
     my $self = shift;
     my $parts = shift;
@@ -24,9 +28,6 @@ sub Convert{
 
 =pod
 
-=head1 NAME
-
-Template::Reverse::Convert::TT2 - Convert parts to TT2 format simply
 
 =head1 SYNOPSIS
     
