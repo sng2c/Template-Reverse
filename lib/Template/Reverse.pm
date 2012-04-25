@@ -1,11 +1,9 @@
-use strict;
-use warnings;
 package Template::Reverse;
-use Moose;
+use Any::Moose;
+use namespace::autoclean;
 use Module::Load;
 use Carp;
-use Data::Dumper;
-our $VERSION = '0.001';
+our $VERSION = '0.005';
 
 
 has 'splitter' => (
@@ -39,9 +37,11 @@ sub detect{
     my @res;
     my $splitter_class = $self->splitter;
     load $splitter_class;
+    my $splitter = $splitter_class->new;
     foreach my $str (@strs){
-        push(@res, [$splitter_class->Split($str)]);
+        push(@res, [$splitter->Split($str)]);
     }
+    undef $splitter;
 
     my $diff = _diff($res[0],$res[1]);
 
@@ -54,12 +54,13 @@ sub space{
     my $str = shift;
     foreach my $spacer_class (@{$self->spacers()}){
         load $spacer_class;
-        $str = $spacer_class->Space($str);
+        my $spacer = $spacer_class->new;
+        $str = $spacer->Space($str);
+        undef($spacer);
     }
     return $str;
 }
 
-# ABSTRACT: turns baubles into trinkets
 use Algorithm::Diff qw(LCS LCS_length LCSidx diff sdiff compact_diff traverse_sequences traverse_balanced);
 
 sub _detect{
@@ -149,20 +150,112 @@ Template::Reverse - A detector of different parts between pair of text.
 
 =head1 SYNOPSIS
 
-Template::Reverse detects different parts between pair of similar text as merged texts from same template.
-
-And it can makes an output marked differences, encodes to TT2 format for being use by Template::Extract module.
-
     use Template::Reverse;
     my $rev = Template::Reverse->new({
-            spacers=>['Template::Reverse::Spacer::Number'],         # at first spacing/unspacing text by
-            splitter=>'Template::Reverse::Splitter::Whitespace',    # and splitting text by
+            spacers=>['Template::Reverse::Spacer::Number'],         # put spaces around Numbers. [OPTIONAL]
+            splitter=>'Template::Reverse::Splitter::Whitespace',    # and splitting text by white spaces. [DEFAULT]
     });
 
     my $parts = $rev->detect($output1, $output2); # returns [ [[PRE],[POST]], ... ]
 
-    use Template::Reverse::TT2Converter;
+    use Template::Reverse::Converter::TT2;
     my @templates = Template::Reverse::TT2Converter::Convert($parts); # named 'value1','value2',...
 
+more
+
+    # try this!!
+    use Template::Reverse;
+    use Template::Reverse::Converter::TT2;
+    use Data::Dumper;
+
+    my $rev = Template::Reverse->new;
+
+    # generating patterns automatically!!
+    my $str1 = "I am perl and smart";
+    my $str2 = "I am khs and a perlmania";
+    my $parts = $rev->detect($str1, $str2);
+
+    my $tt2 = Template::Reverse::Converter::TT2->new;
+    my $temps = $tt2->Convert($parts); # equals ['I am [% value %] and','and [% value %]']
+
+
+    # spacing text for normalization.
+    my $str3 = "I am king of the world and a richest man";
+    my $str3spaced = $rev->space($str3);
+
+    # extract!!
+    use Template::Extract;
+    my $ext = Template::Extract->new;
+    my $value = $ext->extract($temps->[0], $str3spaced);
+    print Dumper($value); # output : {'value'=>'king of the world'}
+
+    my $value = $ext->extract($temps->[1], $str3spaced);
+    print Dumper($value); # output : {'value'=>'a richest man'}
+
+=head1 DESCRIPTION
+
+Template::Reverse detects different parts between pair of similar text as merged texts from same template.
+And it can makes an output marked differences, encodes to TT2 format for being use by Template::Extract module.
+
+=head1 FUNCTIONS
+
+=head3 new({spacers=>[$spacer_package1, ...], splitter=>$splitter_package})
+
+Spacers have order.
+
+
+=head3 detect($text1, $text2)
+
+Get changable part list from two texts.
+It returns like below
+
+    $rev->detect('A b C','A d C');
+    #
+    # [ [ ['A'],['C'] ] ]
+    #   | |___| |___| |     
+    #   |  pre  post  |
+    #   |_____________|  
+    #       part 1
+    #
+
+    $rev->detect('A b C d E','A f C g E');
+    #
+    # [ [ ['A'], ['C'] ], [ ['C'], ['E'] ] ]
+    #   | |___|  |___| |  | |___|  |___| |
+    #   |  pre   post  |  |  pre   post  |
+    #   |______________|  |______________|
+    #        part 1            part 2
+    #
+
+    $rev->detect('A1 A2 B C1 C2 D E1 E2','A1 A2 D C1 C2 F E1 E2');
+    #
+    # [ [ ['A1','A2'],['C2','C2'] ], [ ['C1','C2'], ['E2','E2'] ] ]
+    #
+
+    my $str1 = "I am perl and smart";
+    my $str2 = "I am KHS and a perlmania";
+    my $parts = $rev->detect($str1, $str2);
+    #
+    # [ [ ['I','am'], ['and'] ] , [ ['and'],[] ] ]
+    #   | |________|  |_____| |   |            |
+    #   |    pre       post   |   |            |
+    #   |_____________________|   |____________|
+    #           part 1                part 2
+    #
+
+Returned arrayRef is list of changable parts.
+
+    1. At first, $text1 and $text2 is normalized by Spacers.
+    2. 'pre texts' and 'post texts' are splited by Splitter. In this case, by Whitespace.
+    3. You can get a changing value, just finding 'pre' and 'post' in a normalized text.
+
+=head3 space($text)
+
+It returns a normalized text same as in detect().
+Text are processed by Spacers in order.
+Finding parts in texts, you must use this function with the texts.
+
 =cut
+
+__PACKAGE__->meta->make_immutable;
 1;

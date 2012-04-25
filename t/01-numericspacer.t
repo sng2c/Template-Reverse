@@ -43,12 +43,21 @@ $m4 = '<span value=" 1 " height= 12 px> 1,000 dollars</span>';
 is $m3, $m4;
 
 
+$m3 = space("2.3.3.4");
+$m4 = "2.3.3.4";
+is $m3, $m4;
+
 TODO:{
-    local $TODO="Need more time to dig";
-    $m3 = space("2.3.3.4");
-    $m4 = "2.3.3.4";
-    is $m3, $m4;
-}
+local $TODO="not implement";
+$m3 = space("2,33");
+$m4 = "2 , 33";
+is $m3, $m4;
+
+$m3 = space("2,333,2,444");
+$m4 = "2,333 , 2,444";
+is $m3, $m4;
+};
+
 =pod
 my ($f1,$f2) = @ARGV;
 

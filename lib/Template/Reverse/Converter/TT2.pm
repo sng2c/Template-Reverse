@@ -1,8 +1,10 @@
 package Template::Reverse::Converter::TT2;
 
-
-
+use Any::Moose;
+use namespace::autoclean;
+our $VERSION = '0.004';
 sub Convert{
+    my $self = shift;
     my $parts = shift;
     my @temps;
 
@@ -14,10 +16,29 @@ sub Convert{
         $pretxt .= ' ' if $pretxt;
         $posttxt = ' '.$posttxt if $posttxt;
         push(@temps,$pretxt."[\% value \%]".$posttxt);
-        $dataidx++;
     }
 
-    return @temps;
+    return \@temps;
 }
 
+
+=pod
+
+=head1 NAME
+
+Template::Reverse::Convert::TT2 - Convert parts to TT2 format simply
+
+=head1 VERSION
+
+0.0004
+
+=head1 SYNOPSIS
+    
+    package Template::Reverse::Converter::TT2;
+    my $tt2 = Template::Reverse::Converter::TT2->new;
+    $tt2->Convert([[['pretext'],['posttext']]]);
+
+=cut
+
+__PACKAGE__->meta->make_immutable;
 1;
