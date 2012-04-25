@@ -20,6 +20,12 @@ has 'spacers' => (
     default => sub{[]}
 );
 
+has 'sidelen' => (
+    is=>'rw',
+    isa=>'Int',
+    default => 10
+);
+
 sub detect{
     my $self = shift;
     my @strs = @_;
@@ -39,7 +45,7 @@ sub detect{
 
     my $diff = _diff($res[0],$res[1]);
 
-    my $pattern = _detect($diff);
+    my $pattern = _detect($diff,$self->sidelen());
     return $pattern;
 }
 
@@ -58,6 +64,9 @@ use Algorithm::Diff qw(LCS LCS_length LCSidx diff sdiff compact_diff traverse_se
 
 sub _detect{
     my $diff = shift;
+    my $sidelen = shift;
+    $sidelen = 0 unless $sidelen;
+
     my @d = @{$diff};
     my $lastStar = 0;
     my @res;
@@ -65,7 +74,9 @@ sub _detect{
     {
         if( $d[$i] eq '*' )
         {
-            my @pre = map{substr($_,1);}@d[$lastStar..$i-1];
+            my $from = $lastStar;
+            my $to = $i-1;
+            my @pre = map{substr($_,1);}@d[$from..$to];
             
             my $j = @d;
             if( $i+1 < @d ){
@@ -76,7 +87,9 @@ sub _detect{
                     }
                 }
             }
-            my @post =  map{substr($_,1);}@d[($i+1)..($j-1)];
+            $from = $i+1;
+            $to = $j-1;
+            my @post =  map{substr($_,1);}@d[$from..$to];
 
             push(@res,[\@pre,\@post]);
             $lastStar = $i+1;
