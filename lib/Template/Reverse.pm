@@ -146,7 +146,7 @@ sub _checksum{
 
 =head1 NAME
 
-Template::Reverse - A detector of different parts between pair of text.
+Template::Reverse - A template generator getting different parts between pair of text
 
 =head1 SYNOPSIS
 

@@ -1,8 +1,8 @@
 # Template::Reverse
 
-Template::Reverse detects different parts between pair of similar text as merged texts from same template.
+Template::Reverse - A template generator getting different parts between pair of text
 
-And it can makes an output marked differences, encodes to TT2 format for being use by Template::Extract module.
+Getting TT2 format for being used by Template::Extract module.
 
     use Template::Reverse;
     my $rev = Template::Reverse->new({
