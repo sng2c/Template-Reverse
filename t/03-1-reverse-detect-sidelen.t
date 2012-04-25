@@ -6,7 +6,9 @@ use_ok('Template::Reverse');
 use Data::Dumper;
 sub detect{
     my $diff= shift;
-    return Template::Reverse::_detect($diff, 3);
+    my $r = Template::Reverse::_detect($diff, 3);
+    print Dumper $r;
+    return $r;
 }
 
 @diff = qw(-A -B -C -D -E);
@@ -29,10 +31,13 @@ ok( eq_array($patt, [ [[],[qw(B C D)]] ] ) );
 $patt = detect(\@diff);
 ok( eq_array($patt, [ [[qw(A)],[qw(C)]], [[qw(C)],[qw(E)]]] ) );
 
-
 @diff = qw(-A -B -C * -G -H -I -J -K * -M -N);
 $patt = detect(\@diff);
 ok( eq_array($patt, [ [[qw(A B C)],[qw(G H I)]], [[qw(I J K)],[qw(M N)]]] ) );
+
+@diff = qw(-Q -A -B -C * -G -H -I -J -K * -M -N -O -P);
+$patt = detect(\@diff);
+ok( eq_array($patt, [ [[qw(A B C)],[qw(G H I)]], [[qw(I J K)],[qw(M N O)]]] ) );
 
 @diff = qw(* -A -B -C * -G -H -I -J -K * -M -N * );
 $patt = detect(\@diff);

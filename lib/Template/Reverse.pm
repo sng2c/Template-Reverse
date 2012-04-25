@@ -80,6 +80,9 @@ sub _detect{
         {
             my $from = $lastStar;
             my $to = $i-1;
+            if( $sidelen ){
+                $from = $to-$sidelen+1 if $to-$from+1 > $sidelen;
+            }
             my @pre = map{substr($_,1);}@d[$from..$to];
             
             my $j = @d;
@@ -93,6 +96,9 @@ sub _detect{
             }
             $from = $i+1;
             $to = $j-1;
+            if( $sidelen ){
+                $to = $from + $sidelen-1 if $to-$from+1 > $sidelen;
+            }
             my @post =  map{substr($_,1);}@d[$from..$to];
 
             push(@res,[\@pre,\@post]);
