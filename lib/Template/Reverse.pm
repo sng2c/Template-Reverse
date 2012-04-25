@@ -3,8 +3,8 @@ use Any::Moose;
 use namespace::autoclean;
 use Module::Load;
 use Carp;
-our $VERSION = '0.006';
 
+# VERSION
 
 has 'splitter' => (
     is=>'rw', 
@@ -257,6 +257,18 @@ Returned arrayRef is list of changable parts.
 It returns a normalized text same as in detect().
 Text are processed by Spacers in order.
 Finding parts in texts, you must use this function with the texts.
+
+=head1 SEE ALSO
+
+=item *
+
+L<Template::Extract>
+
+=head1 SOURCE
+
+L<https://github.com/sng2c/Template-Reverse>
+
+# COPYRIGHT
 
 =cut
 
