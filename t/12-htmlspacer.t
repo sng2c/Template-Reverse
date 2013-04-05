@@ -1,13 +1,20 @@
 use Test::More;
 use lib '../lib';
+use lib './lib';
 BEGIN{
 use_ok("Template::Reverse::Spacer::HTML");
+use_ok("Template::Reverse::Spacer::Numeric");
 };
 
 sub space{
     my $str = shift;
     return Template::Reverse::Spacer::HTML->Space($str);
 }
+sub numspace{
+    my $str = shift;
+    return Template::Reverse::Spacer::Numeric->Space($str);
+}
+
 
 $m1 = space("ABC DEF HIJ");
 $m2 = "ABC EF HIJ";
@@ -46,12 +53,18 @@ $m3 = space('<a href="http://metacpan.org">GOGO!!</a>');
 $m4 = '<a href=" http://metacpan.org "> GOGO!! </a>';
 is $m3, $m4;
 
-$m3 = space('<a href="https://metacpan.org/module/Template::Reverse">GOGO!!</a>');
+$m3 = space(numspace('<a href="https://metacpan.org/module/Template::Reverse">GOGO!!</a>'));
 $m4 = '<a href=" https://metacpan.org/module/Template::Reverse "> GOGO!! </a>';
 is $m3, $m4;
 
-$m3 = space('<a href="https://metacpan.org/module/Template::Reverse?a=123&name=%20">GOGO!!</a>');
+
+$m3 = space(numspace('<a href="https://metacpan.org/module/Template::Reverse?a=123&name=%20">GOGO!!</a>'));
 $m4 = '<a href=" https://metacpan.org/module/Template::Reverse?a=123&name=%20 "> GOGO!! </a>';
+is $m3, $m4;
+
+
+$m3 = space(numspace('https://metacpan.org/module/Template::Reverse?a=123&name=%20'));
+$m4 = 'https://metacpan.org/module/Template::Reverse?a=123&name=%20';
 is $m3, $m4;
 
 $m3 = space("2.3.3.4");
