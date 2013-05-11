@@ -302,6 +302,13 @@ L<Template::Extract>
 
 L<https://github.com/sng2c/Template-Reverse>
 
+=head1 THANKS TO
+
+=item https://metacpan.org/author/AMORETTE
+
+This module is dedicated to AMORETTE.
+He was interested in this module and was cheering me up.
+
 =cut
 
 
