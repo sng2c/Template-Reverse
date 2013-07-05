@@ -4,7 +4,7 @@ Template::Reverse - A template generator getting different parts between pair of
 
 # VERSION
 
-version 0.100
+version 0.101
 
 # SYNOPSIS
 
