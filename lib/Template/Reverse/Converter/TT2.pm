@@ -2,8 +2,7 @@ package Template::Reverse::Converter::TT2;
 
 # ABSTRACT: Convert parts to TT2 format simply
 
-use Any::Moose;
-use namespace::autoclean;
+use Moo;
 
 # VERSION
 
@@ -37,5 +36,4 @@ sub Convert{
 
 =cut
 
-__PACKAGE__->meta->make_immutable;
 1;
