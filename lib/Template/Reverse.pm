@@ -6,8 +6,6 @@ use Moo;
 use Carp;
 use Template::Reverse::Part;
 use Algorithm::Diff qw(sdiff);
-use Parse::Token::Lite::Token;
-use Data::Dump;
 use Scalar::Util qw(blessed);
 # VERSION
 
@@ -191,27 +189,26 @@ sub _detect{
 
 sub _diff{
     my ($a,$b) = @_;
+    my ($org_a,$org_b) = @_;
 
-    if( blessed $a ){
-      $a = [map{$_->as_string}@{$a}];
-    }
+    $a = [map{blessed($_)?$_->as_string:$_}@{$a}];
+    $b = [map{blessed($_)?$_->as_string:$_}@{$b}];
     
-    if( blessed $b ){
-      $b = [map{$_->as_string}@{$b}];
-    }
-
     my @d = sdiff($a,$b);
     my @rr;
     my $before='';
+    my $idx = 0;
     for my $r (@d){
         if( $r->[0] eq 'u' ){
-            push(@rr,$r->[1]);
+            push(@rr,$org_a->[$idx]);
             $before = '';
         }
         else{
             push(@rr,WILDCARD) unless _isWILDCARD($before);
             $before = WILDCARD;
         }
+        $idx++ if $r->[0] ne '+';
+        
     }
     return \@rr;
 }
