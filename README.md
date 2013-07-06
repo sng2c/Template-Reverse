@@ -4,7 +4,7 @@ Template::Reverse - A template generator getting different parts between pair of
 
 # VERSION
 
-version 0.120
+version 0.121
 
 # SYNOPSIS
 
@@ -64,14 +64,15 @@ If you set it as 3, you get max 3 length pre-text and post-text array each part.
 
 This is needed for more faster performance.
 
-### detect($arr\_of\_text1, $arr\_of\_text2)
+### WILDCARD()
 
-### detect($tokens1, $tokens2)
+WILDCARD() returns a blessed array reference as 'WILDCARD' to means WILDCARD token.
+This is used by \_diff() and \_detect().
 
-Get an array-ref of [Template::Reverse::Part](http://search.cpan.org/perldoc?Template::Reverse::Part) from two array-refs.
+### detect($arr\_ref1, $arr\_ref2)
+
+Get an array-ref of [Template::Reverse::Part](http://search.cpan.org/perldoc?Template::Reverse::Part) from two array-refs which contains text or object implements as\_string() method.
 A [Template::Reverse::Part](http://search.cpan.org/perldoc?Template::Reverse::Part) class means an one changable token.
-
-The token is [Parse::Token::Lite::Token](http://search.cpan.org/perldoc?Parse::Token::Lite::Token).
 
 It returns like below.
 
@@ -109,11 +110,19 @@ It returns like below.
     #           Part #1               Part #2
     #
 
+    # You can get same result for object arrays.
+    my $objs1 = [$obj1, $obj2, $obj3];
+    my $objs2 = [$obj1, $obj3];
+    #
+    # [ { [ $obj1 ], [ $obj3 ] } ]
+    #   : :.......:  :.......: :
+    #   :    pre       post    :
+    #   :......................:
+    #           Part #1
+
 Returned arrayRef is list of changable parts.
 
-    1. At first, $text1 and $text2 is normalized by Spacers.
-    2. 'pre texts' and 'post texts' are splited by Splitter. In this case, by Whitespace.
-    3. You can get a changing value, just finding 'pre' and 'post' in a normalized text.
+    You can get a changed token if you find just 'pre' and 'post' sequences on any other token array.
 
 # SEE ALSO
 

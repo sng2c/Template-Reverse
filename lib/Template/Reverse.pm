@@ -76,20 +76,23 @@ has 'sidelen' => (
     default => 10
 );
 
+=head3 WILDCARD()
+
+WILDCARD() returns a blessed array reference as 'WILDCARD' to means WILDCARD token.
+This is used by _diff() and _detect().
+
+=cut
+
 my $_WILDCARD = bless [], 'WILDCARD';
 sub WILDCARD{return $_WILDCARD};
 sub _isWILDCARD{
   return ref $_[0] eq 'WILDCARD';
 }
 
-=head3 detect($arr_of_text1, $arr_of_text2)
+=head3 detect($arr_ref1, $arr_ref2)
 
-=head3 detect($tokens1, $tokens2)
-
-Get an array-ref of L<Template::Reverse::Part> from two array-refs.
+Get an array-ref of L<Template::Reverse::Part> from two array-refs which contains text or object implements as_string() method.
 A L<Template::Reverse::Part> class means an one changable token.
-
-The token is L<Parse::Token::Lite::Token>.
 
 It returns like below.
 
@@ -127,11 +130,19 @@ It returns like below.
     #           Part #1               Part #2
     #
 
+    # You can get same result for object arrays.
+    my $objs1 = [$obj1, $obj2, $obj3];
+    my $objs2 = [$obj1, $obj3];
+    #
+    # [ { [ $obj1 ], [ $obj3 ] } ]
+    #   : :.......:  :.......: :
+    #   :    pre       post    :
+    #   :......................:
+    #           Part #1
+
 Returned arrayRef is list of changable parts.
 
-    1. At first, $text1 and $text2 is normalized by Spacers.
-    2. 'pre texts' and 'post texts' are splited by Splitter. In this case, by Whitespace.
-    3. You can get a changing value, just finding 'pre' and 'post' in a normalized text.
+    You can get a changed token if you find just 'pre' and 'post' sequences on any other token array.
 
 =cut
 
