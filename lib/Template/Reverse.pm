@@ -78,7 +78,8 @@ has 'sidelen' => (
 
 =head3 detect($text1, $text2)
 
-Get changable array-ref of L<Template::Reverse::Part> from two texts.
+Get an array-ref of L<Template::Reverse::Part> from two array-refs.
+A L<Template::Reverse::Part> class means an one changable token.
 It returns like below.
 
     $rev->detect([qw(A b C)], [qw(A d C)]);
@@ -104,8 +105,8 @@ It returns like below.
     # [ { ['A1','A2'],['C2','C2'] }, { ['C1','C2'], ['E2','E2'] } ]
     #
 
-    my $str1 = "I am perl and smart";
-    my $str2 = "I am KHS and a perlmania";
+    my $str1 = [qw"I am perl and smart"];
+    my $str2 = [qw"I am KHS and a perlmania"];
     my $parts = $rev->detect($str1, $str2);
     #
     # [ { ['I','am'], ['and'] } , { ['and'],[] } ]
