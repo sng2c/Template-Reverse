@@ -17,16 +17,16 @@ $str2 = [qw"A B C E F"];
 $parts = $rev->detect($str1,$str2);
 print Dumper $parts;
 ok( scalar(@{$parts}) == 1 );
-ok( eq_array( $parts->[0]->[0], [qw'A B C']), 'Pre-Patthen');
-ok( eq_array( $parts->[0]->[1], [qw'E F']), 'Post-Pattern');
+ok( eq_array( $parts->[0]->pre, [qw'A B C']), 'Pre-Patthen');
+ok( eq_array( $parts->[0]->post, [qw'E F']), 'Post-Pattern');
 
 $str1 = [qw"가격 1200 원"];
 $str2 = [qw"가격 1300 원"];
 $parts = $rev->detect($str1,$str2);
 print Dumper $parts;
 ok( scalar(@{$parts}) == 1 );
-ok( eq_array( $parts->[0]->[0], [qw'가격']), 'Pre-Patthen');
-ok( eq_array( $parts->[0]->[1], [qw'원']), 'Post-Pattern');
+ok( eq_array( $parts->[0]->pre,[qw'가격']), 'Pre-Patthen');
+ok( eq_array( $parts->[0]->post, [qw'원']), 'Post-Pattern');
 
 
 done_testing();

@@ -7,8 +7,7 @@ use Data::Dumper;
 sub detect{
     my $diff= shift;
     my $r = Template::Reverse::_detect($diff, 3);
-    print Dumper $r;
-    return $r;
+    return [map{$_->as_arrayref}@{$r}];
 }
 
 @diff = qw(-A -B -C -D -E);

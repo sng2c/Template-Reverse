@@ -4,7 +4,7 @@ package Template::Reverse;
 
 use Moo;
 use Carp;
-
+use Template::Reverse::Part;
 use Algorithm::Diff qw(sdiff);
 
 # VERSION
@@ -17,7 +17,7 @@ use Algorithm::Diff qw(sdiff);
     use Template::Reverse;
     my $rev = Template::Reverse->new();
 
-    my $parts = $rev->detect($arr_ref1, $arr_ref2); # returns [ [[PRE],[POST]], ... ]
+    my $parts = $rev->detect($arr_ref1, $arr_ref2); # returns [ Template::Reverser::Part, ... ]
 
     use Template::Reverse::Converter::TT2;
     my @templates = Template::Reverse::TT2Converter::Convert($parts); # named 'value1','value2',...
@@ -78,41 +78,41 @@ has 'sidelen' => (
 
 =head3 detect($text1, $text2)
 
-Get changable part list from two texts.
-It returns like below
+Get changable array-ref of L<Template::Reverse::Part> from two texts.
+It returns like below.
 
     $rev->detect([qw(A b C)], [qw(A d C)]);
-    #
-    # [ [ ['A'],['C'] ] ]
+    # 
+    # [ { ['A'],['C'] } ] <- Plaese focus at data, not expression.
     #   : :...: :...: :     
     #   :  pre  post  :
     #   :.............:  
-    #       part 1
+    #       Part #1
     #
 
     $rev->detect([qw(A b C d E)],[qw(A f C g E)]);
     #
-    # [ [ ['A'], ['C'] ], [ ['C'], ['E'] ] ]
+    # [ { ['A'], ['C'] }, { ['C'], ['E'] } ]
     #   : :...:  :...: :  : :...:  :...: :
     #   :  pre   post  :  :  pre   post  :
     #   :..............:  :..............:
-    #        part 1            part 2
+    #        Part #1          Part #2
     #
 
     $rev->detect([qw(A1 A2 B C1 C2 D E1 E2)],[qw(A1 A2 D C1 C2 F E1 E2)]);
     #
-    # [ [ ['A1','A2'],['C2','C2'] ], [ ['C1','C2'], ['E2','E2'] ] ]
+    # [ { ['A1','A2'],['C2','C2'] }, { ['C1','C2'], ['E2','E2'] } ]
     #
 
     my $str1 = "I am perl and smart";
     my $str2 = "I am KHS and a perlmania";
     my $parts = $rev->detect($str1, $str2);
     #
-    # [ [ ['I','am'], ['and'] ] , [ ['and'],[] ] ]
+    # [ { ['I','am'], ['and'] } , { ['and'],[] } ]
     #   : :........:  :.....: :   :            :
     #   :    pre       post   :   :            :
     #   :.....................:   :............:
-    #           part 1                part 2
+    #           Part #1               Part #2
     #
 
 Returned arrayRef is list of changable parts.
@@ -167,8 +167,8 @@ sub _detect{
                 $to = $from + $sidelen-1 if $to-$from+1 > $sidelen;
             }
             my @post =  map{substr($_,1);}@d[$from..$to];
-
-            push(@res,[\@pre,\@post]);
+            my $part = Template::Reverse::Part->new(pre=>\@pre, post=>\@post);
+            push(@res,$part);
             $lastStar = $i+1;
         }
     }

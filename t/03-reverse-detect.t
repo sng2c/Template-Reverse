@@ -5,9 +5,12 @@ use_ok('Template::Reverse');
 }
 use Data::Dumper;
 sub detect{
-    my $diff= shift;
-    return Template::Reverse::_detect($diff);
+my $diff= shift;
+my $r = Template::Reverse::_detect($diff);
+return [map{$_->as_arrayref}@{$r}];
 }
+
+
 
 @diff = qw(-A -B -C -D -E);
 $patt = detect(\@diff);
