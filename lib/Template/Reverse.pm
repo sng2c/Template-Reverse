@@ -6,7 +6,9 @@ use Moo;
 use Carp;
 use Template::Reverse::Part;
 use Algorithm::Diff qw(sdiff);
-
+use Parse::Token::Lite::Token;
+use Data::Dump;
+use Scalar::Util qw(blessed);
 # VERSION
 
 =pod
@@ -76,10 +78,21 @@ has 'sidelen' => (
     default => 10
 );
 
-=head3 detect($text1, $text2)
+my $_WILDCARD = bless [], 'WILDCARD';
+sub WILDCARD{return $_WILDCARD};
+sub _isWILDCARD{
+  return ref $_[0] eq 'WILDCARD';
+}
+
+=head3 detect($arr_of_text1, $arr_of_text2)
+
+=head3 detect($tokens1, $tokens2)
 
 Get an array-ref of L<Template::Reverse::Part> from two array-refs.
 A L<Template::Reverse::Part> class means an one changable token.
+
+The token is L<Parse::Token::Lite::Token>.
+
 It returns like below.
 
     $rev->detect([qw(A b C)], [qw(A d C)]);
@@ -138,26 +151,25 @@ sub _detect{
     my $diff = shift;
     my $sidelen = shift;
     $sidelen = 0 unless $sidelen;
-
     my @d = @{$diff};
     my $lastStar = 0;
     my @res;
     for(my $i=0; $i<@d; $i++)
     {
-        if( $d[$i] eq '*' )
+        if( _isWILDCARD($d[$i] ) )
         {
             my $from = $lastStar;
             my $to = $i-1;
             if( $sidelen ){
                 $from = $to-$sidelen+1 if $to-$from+1 > $sidelen;
             }
-            my @pre = map{substr($_,1);}@d[$from..$to];
+            my @pre = @d[$from..$to];
             
             my $j = @d;
             if( $i+1 < @d ){
                 for( $j=$i+1; $j<@d; $j++)
                 {
-                    if( $d[$j] eq '*' ){
+                    if( _isWILDCARD( $d[$j] ) ){
                         last;
                     }
                 }
@@ -167,7 +179,7 @@ sub _detect{
             if( $sidelen ){
                 $to = $from + $sidelen-1 if $to-$from+1 > $sidelen;
             }
-            my @post =  map{substr($_,1);}@d[$from..$to];
+            my @post = @d[$from..$to];
             my $part = Template::Reverse::Part->new(pre=>\@pre, post=>\@post);
             push(@res,$part);
             $lastStar = $i+1;
@@ -176,20 +188,29 @@ sub _detect{
     return \@res;
 }
 
+
 sub _diff{
     my ($a,$b) = @_;
+
+    if( blessed $a ){
+      $a = [map{$_->as_string}@{$a}];
+    }
+    
+    if( blessed $b ){
+      $b = [map{$_->as_string}@{$b}];
+    }
 
     my @d = sdiff($a,$b);
     my @rr;
     my $before='';
     for my $r (@d){
         if( $r->[0] eq 'u' ){
-            push(@rr,'-'.$r->[1]);
+            push(@rr,$r->[1]);
             $before = '';
         }
         else{
-            push(@rr,'*') if( $before ne '*' );
-            $before = '*';
+            push(@rr,WILDCARD) unless _isWILDCARD($before);
+            $before = WILDCARD;
         }
     }
     return \@rr;

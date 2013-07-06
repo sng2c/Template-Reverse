@@ -4,7 +4,7 @@ Template::Reverse - A template generator getting different parts between pair of
 
 # VERSION
 
-version 0.110
+version 0.120
 
 # SYNOPSIS
 
@@ -64,10 +64,15 @@ If you set it as 3, you get max 3 length pre-text and post-text array each part.
 
 This is needed for more faster performance.
 
-### detect($text1, $text2)
+### detect($arr\_of\_text1, $arr\_of\_text2)
+
+### detect($tokens1, $tokens2)
 
 Get an array-ref of [Template::Reverse::Part](http://search.cpan.org/perldoc?Template::Reverse::Part) from two array-refs.
 A [Template::Reverse::Part](http://search.cpan.org/perldoc?Template::Reverse::Part) class means an one changable token.
+
+The token is [Parse::Token::Lite::Token](http://search.cpan.org/perldoc?Parse::Token::Lite::Token).
+
 It returns like below.
 
     $rev->detect([qw(A b C)], [qw(A d C)]);

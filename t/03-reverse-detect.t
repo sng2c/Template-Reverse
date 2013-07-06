@@ -11,40 +11,39 @@ return [map{$_->as_arrayref}@{$r}];
 }
 
 
+my $W = Template::Reverse::WILDCARD;
 
-@diff = qw(-A -B -C -D -E);
+@diff = qw(A B C D E);
 $patt = detect(\@diff);
-ok( eq_array($patt, [] ) );
+is_deeply($patt, [] ) ;
 
-@diff = qw(-A -B * -D -E);
+@diff = (qw(A B),$W,qw(D E));
 $patt = detect(\@diff);
-ok( eq_array($patt, [ [[qw(A B)],[qw(D E)]] ] ) );
+is_deeply($patt, [ [[qw(A B)],[qw(D E)]] ] ) ;
 
-@diff = qw(-A -B -C -D * );
+@diff = (qw(A B C D),$W);
 $patt = detect(\@diff);
-ok( eq_array($patt, [ [[qw(A B C D)],[]] ] ) );
+is_deeply($patt, [ [[qw(A B C D)],[]] ] ) ;
 
-@diff = qw(* -B -C -D -E);
+@diff = ($W,qw(B C D E));
 $patt = detect(\@diff);
-ok( eq_array($patt, [ [[],[qw(B C D E)]] ] ) );
+is_deeply($patt, [ [[],[qw(B C D E)]] ] ) ;
 
-@diff = qw(-A * -C * -E);
+@diff = (qw(A),$W,qw(C),$W,qw(E));
 $patt = detect(\@diff);
-ok( eq_array($patt, [ [[qw(A)],[qw(C)]], [[qw(C)],[qw(E)]]] ) );
 
-
-@diff = qw(-A -B -C * -G -H -I -J -K * -M -N);
+@diff = (qw(A B C),$W,qw(G H I J K),$W,qw(M N));
 $patt = detect(\@diff);
-ok( eq_array($patt, [ [[qw(A B C)],[qw(G H I J K)]], [[qw(G H I J K)],[qw(M N)]]] ) );
+is_deeply($patt, [ [[qw(A B C)],[qw(G H I J K)]], [[qw(G H I J K)],[qw(M N)]]] ) ;
 
-@diff = qw(* -A -B -C * -G -H -I -J -K * -M -N * );
+@diff = ($W,qw( A B C),$W,qw(G H I J K),$W,qw(M N),$W);
 $patt = detect(\@diff);
-ok( eq_array($patt, [ [[],[qw(A B C)]],[[qw(A B C)],[qw(G H I J K)]], [[qw(G H I J K)],[qw(M N)]], [[qw(M N)],[]]] ) );
+is_deeply($patt, [ [[],[qw(A B C)]],[[qw(A B C)],[qw(G H I J K)]], [[qw(G H I J K)],[qw(M N)]], [[qw(M N)],[]]] ) ;
 
 
-@diff = qw(-I -went -to -the * -when -i -had -met -the * );
+@diff = (qw(I went to the),$W,qw(when i had met the),$W);
 $patt = detect(\@diff);
-ok( eq_array($patt, 
+is_deeply($patt, 
         [
           [
             [
@@ -71,6 +70,6 @@ ok( eq_array($patt,
             ],
             []
           ]
-        ]));
+        ]);
 
 done_testing();
