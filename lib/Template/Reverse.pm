@@ -83,7 +83,7 @@ It returns like below.
 
     $rev->detect([qw(A b C)], [qw(A d C)]);
     # 
-    # [ { ['A'],['C'] } ] <- Plaese focus at data, not expression.
+    # [ { ['A'],['C'] } ] <- Please focus at data, not expression.
     #   : :...: :...: :     
     #   :  pre  post  :
     #   :.............:  
