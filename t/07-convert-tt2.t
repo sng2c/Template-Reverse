@@ -22,40 +22,41 @@ is_deeply( $temps, [] );
 @diff = (qw(A B ),$W,qw( D E));
 $parts = detect(\@diff);
 $temps = $tt2->Convert($parts);
-is_deeply( $temps, ['A B [% value %] D E'] );
+is_deeply( $temps, ['AB[% value %]DE'] );
 
 @diff = (qw(A B C D ),$W,qw( ));
 $parts = detect(\@diff);
 $temps = $tt2->Convert($parts);
-is_deeply( $temps, ['A B C D [% value %]'] );
+is_deeply( $temps, ['ABCD[% value %]'] );
 
 @diff = (qw(),$W,qw( B C D E));
 $parts = detect(\@diff);
 $temps = $tt2->Convert($parts);
-is_deeply( $temps, ['[% value %] B C D E'] );
+is_deeply( $temps, ['[% value %]BCDE'] );
 
 @diff = (qw(A ),$W,qw( C ),$W,qw( E));
 $parts = detect(\@diff);
 $temps = $tt2->Convert($parts);
-is_deeply( $temps, ['A [% value %] C','C [% value %] E'] );
+is_deeply( $temps, ['A[% value %]C','C[% value %]E'] );
 
 @diff = (qw(A B C ),$W,qw( G H I J K ),$W,qw( M N));
 $parts = detect(\@diff);
 $temps = $tt2->Convert($parts);
-is_deeply( $temps, ['A B C [% value %] G H I J K','G H I J K [% value %] M N'] );
+is_deeply( $temps, ['ABC[% value %]GHIJK','GHIJK[% value %]MN'] );
 
 @diff = (qw(),$W,qw( A B C ),$W,qw( G H I J K ),$W,qw( M N ),$W,qw( ));
 $parts = detect(\@diff);
 $temps = $tt2->Convert($parts);
-is_deeply( $temps, ['[% value %] A B C','A B C [% value %] G H I J K','G H I J K [% value %] M N','M N [% value %]'] );
+is_deeply( $temps, ['[% value %]ABC','ABC[% value %]GHIJK','GHIJK[% value %]MN','MN[% value %]'] );
 
 
-@diff = (qw(I went to the ),$W,qw( when i had met the ),$W,qw( ));
+@diff = (qw(I went to the ),$W,qw( when i had met the ),$W);
+@diff = map{$_,' '}@diff;
 $parts = detect(\@diff);
 $temps = $tt2->Convert($parts);
 is_deeply( $temps, [
-          'I went to the [% value %] when i had met the',
-          'when i had met the [% value %]'
+          'I went to the [% value %] when i had met the ',
+          ' when i had met the [% value %] '
 ]);
 
 done_testing();

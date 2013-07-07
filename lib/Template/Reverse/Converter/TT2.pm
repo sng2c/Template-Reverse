@@ -17,10 +17,10 @@ sub Convert{
 
         @pre = map{blessed($_)?$_->as_string:$_}@pre;
         @post= map{blessed($_)?$_->as_string:$_}@post;
-        my $pretxt = join ' ',@pre;
-        my $posttxt = join ' ',@post;
-        $pretxt .= ' ' if $pretxt;
-        $posttxt = ' '.$posttxt if $posttxt;
+        my $pretxt = join '',@pre;
+        my $posttxt = join '',@post;
+        $pretxt .= '' if $pretxt;
+        $posttxt = ''.$posttxt if $posttxt;
         push(@temps,$pretxt."[\% value \%]".$posttxt);
     }
 

@@ -23,7 +23,7 @@ $parts = $rev->detect($str1,$str2);
 $temps = $tt2->Convert($parts);
 print Dumper $parts;
 print Dumper($temps);
-ok( eq_array( $temps, ['A B C [% value %] E F'] ));
+ok( eq_array( $temps, ['ABC[% value %]EF'] ));
 
 $str1 = [qw"가격 1200 원"];
 $str2 = [qw"가격 1300 원"];
@@ -32,7 +32,7 @@ print Dumper $parts;
 $temps = $tt2->Convert($parts);
 print Dumper $parts;
 print Dumper($temps);
-ok( eq_array( $temps, ['가격 [% value %] 원'] ));
+ok( eq_array( $temps, ['가격[% value %]원'] ));
 
 
 done_testing();
