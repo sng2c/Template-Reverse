@@ -73,7 +73,7 @@ This is needed for more faster performance.
 =cut
 has 'sidelen' => (
     is=>'rw',
-    default => 10
+    default => sub{return 10;}
 );
 
 =head3 WILDCARD()
