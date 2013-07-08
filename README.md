@@ -27,11 +27,11 @@ more
 
     # generating patterns automatically!!
     my $str1 = ['I',' ','am',' ', 'perl',' ','and',' ','smart']; # White spaces should be explained explicity.
-    my $str2 = ['I',' ','am',' ', 'khs' ,' ', and',' ','a',' ','perlmania']; # Use Parse::Lex or Parse::Token::Lite to make it easy.
+    my $str2 = ['I',' ','am',' ', 'khs' ,' ','and',' ','a',' ','perlmania']; # Use Parse::Lex or Parse::Token::Lite to make it easy.
     my $parts = $rev->detect($str1, $str2);
 
     my $tt2 = Template::Reverse::Converter::TT2->new;
-    my $temps = $tt2->Convert($parts); # equals ['I am [% value %] and','and [% value %]']
+    my $templates = $tt2->Convert($parts); # equals to ['I am [% value %] and','and [% value %]']
 
 
 
@@ -40,10 +40,10 @@ more
     # extract!!
     use Template::Extract;
     my $ext = Template::Extract->new;
-    my $value = $ext->extract($temps->[0], $str3);
+    my $value = $ext->extract($templates->[0], $str3);
     print Dumper($value); # output : {'value'=>'king of the world'}
 
-    my $value = $ext->extract($temps->[1], $str3);
+    my $value = $ext->extract($templates->[1], $str3);
     print Dumper($value); # output : {'value'=>'a richest man'}
 
 # DESCRIPTION
