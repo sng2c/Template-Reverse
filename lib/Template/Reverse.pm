@@ -3,7 +3,7 @@ package Template::Reverse;
 # ABSTRACT: A template generator getting different parts between pair of text
 
 use Moo;
-use Carp;
+use utf8;
 use Template::Reverse::Part;
 use Algorithm::Diff qw(sdiff);
 use Scalar::Util qw(blessed);
