@@ -1,6 +1,6 @@
 package Template::Reverse::Converter::Regexp;
 
-# ABSTRACT: Convert parts to TT2 format simply
+# ABSTRACT: Convert parts to Regular Expression simply
 
 use Moo;
 use Scalar::Util qw(blessed);
@@ -40,9 +40,11 @@ sub Convert{
 
 =head1 SYNOPSIS
     
-    package Template::Reverse::Converter::TT2;
-    my $tt2 = Template::Reverse::Converter::TT2->new;
-    $tt2->Convert([[['pretext'],['posttext']]]);
+    package Template::Reverse::Converter::Regexp;
+    my $tt2 = Template::Reverse::Converter::Regexp->new;
+    my $res = $tt2->Convert([[['pretext'],['posttext']]]);
+	"Some text" =~ /$res/;
+	print $1;
 
 =cut
 
