@@ -64,6 +64,10 @@ more
         }
     }
 
+    # When you need to get regexp as string.
+    use re regexp_pattern;
+    my($pat,$flag) = regexp_pattern( $regexp_list->[0] );
+    print $pat; # Not to use $flag, set flags in pat like '(?i)...'.
 
 =head1 DESCRIPTION
 

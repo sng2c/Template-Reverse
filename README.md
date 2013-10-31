@@ -20,7 +20,6 @@ more
 
     # try this!!
     use Template::Reverse;
-    use Template::Reverse::Converter::TT2;
     use Data::Dumper;
 
     my $rev = Template::Reverse->new;
@@ -30,14 +29,13 @@ more
     my $str2 = ['I',' ','am',' ', 'khs' ,' ','and',' ','a',' ','perlmania']; # Use Parse::Lex or Parse::Token::Lite to make it easy.
     my $parts = $rev->detect($str1, $str2);
 
-    my $tt2 = Template::Reverse::Converter::TT2->new;
-    my $templates = $tt2->Convert($parts); # equals to ['I am [% value %] and','and [% value %]']
-
-
-
     my $str3 = "I am king of the world and a richest man";
 
-    # extract!!
+    # extract with TT2
+    use Template::Reverse::Converter::TT2;
+    my $tt2 = Template::Reverse::Converter::TT2->new;
+    my $templates = $tt2->Convert($parts); # equals to ['I am [% value %] and ',' and [% value %]']
+
     use Template::Extract;
     my $ext = Template::Extract->new;
     my $value = $ext->extract($templates->[0], $str3);
@@ -45,6 +43,27 @@ more
 
     my $value = $ext->extract($templates->[1], $str3);
     print Dumper($value); # output : {'value'=>'a richest man'}
+
+
+
+    # extract with Regexp
+    my $regexp_conv = Template::Reverse::Converter::Regexp->new;
+    my $regexp_list = $regexp_conv->Convert($parts); # equals to ['I am [% value %] and ',' and [% value %]']
+
+    my $str3 = "I am king of the world and a richest man";
+     
+
+    # extract!!
+    foreach my $regexp (@{$regexp_list}){
+        if( $str3 =~ /$regexp/ ){
+            print $1."\n";
+        }
+    }
+
+    # When you need to get regexp as string.
+    use re regexp_pattern;
+    my($pat,$flag) = regexp_pattern( $regexp_list->[0] );
+    print $pat; # Not to use $flag, set flags in pat like '(?i)...'.
 
 # DESCRIPTION
 

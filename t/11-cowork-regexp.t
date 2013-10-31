@@ -41,7 +41,12 @@ $str1 = [qw"가격 1200 원"];
 $str2 = [qw"가격 1300 원"];
 $parts = $rev->detect($str1,$str2);
 $temps = $regexp->Convert($parts);
+print Dumper $temps;
 is_deeply( $temps, [qr'가격(.+?)원'] );
+
+use re 'regexp_pattern';
+my ($asstr) = regexp_pattern $temps->[0];
+is $asstr,'가격(.+?)원';
 
 $temp = $temps->[0];
 "가격1200원"=~/$temp/;

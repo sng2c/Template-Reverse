@@ -50,8 +50,8 @@ is $extres->{'value'}, '1200';
 $extres = $ext->extract($temp,"가격1300원");
 is $extres->{'value'}, '1300';
 
-$str1 = [map{$_,' '}qw"I am perl, and I am smart"];
-$str2 = [map{$_,' '}qw"I am khs, and I am a perlmania"];
+$str1 = [map{$_,' '}qw(I am perl, and I am smart)];
+$str2 = [map{$_,' '}qw(I am khs, and I am a perlmania)];
 pop(@{$str1});
 pop(@{$str2});
 my $str3 = "I am king of the world, and I am a richest man";
