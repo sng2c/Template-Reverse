@@ -12,8 +12,8 @@ my $str1 = ['I',' ','am',' ', 'perl',' ','and',' ','smart']; # White spaces shou
 my $str2 = ['I',' ','am',' ', 'khs' ,' ','and',' ','a',' ','perlmania']; # Use Parse::Lex or Parse::Token::Lite to make it easy.
 my $parts = $rev->detect($str1, $str2);
  
-my $tt2 = Template::Reverse::Converter::Regexp->new;
-my $templates = $tt2->Convert($parts); # equals to ['I am [% value %] and ',' and [% value %]']
+my $reg = Template::Reverse::Converter::Regexp->new;
+my $templates = $reg->Convert($parts);
 
 my $str3 = "I am king of the world and a richest man";
  

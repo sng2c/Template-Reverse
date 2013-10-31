@@ -50,10 +50,9 @@ more
     my $value = $ext->extract($templates->[1], $str3);
     print Dumper($value); # output : {'value'=>'a richest man'}
 
-
     # extract with Regexp
     my $regexp_conv = Template::Reverse::Converter::Regexp->new;
-    my $regexp_list = $regexp_conv->Convert($parts); # equals to ['I am [% value %] and ',' and [% value %]']
+    my $regexp_list = $regexp_conv->Convert($parts); 
 
     my $str3 = "I am king of the world and a richest man";
      
@@ -67,7 +66,7 @@ more
     # When you need to get regexp as string.
     use re regexp_pattern;
     my($pat,$flag) = regexp_pattern( $regexp_list->[0] );
-    print $pat; # Not to use $flag, set flags in pat like '(?i)...'.
+    print $pat; # Regexp generates regexps without flags. So you do not need to use $flag.
 
 =head1 DESCRIPTION
 
@@ -247,6 +246,7 @@ sub _diff{
 =item *
 
 L<Template::Extract>
+L<Parse::Token::Lite>
 
 =head1 SOURCE
 
