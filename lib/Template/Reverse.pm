@@ -20,7 +20,7 @@ use Scalar::Util qw(blessed);
     my $parts = $rev->detect($arr_ref1, $arr_ref2); # returns [ Template::Reverser::Part, ... ]
 
     use Template::Reverse::Converter::TT2;
-    my @templates = Template::Reverse::TT2Converter::Convert($parts); 
+    my @templates = Template::Reverse::Converter::TT2::Convert($parts); 
 
 more
 
