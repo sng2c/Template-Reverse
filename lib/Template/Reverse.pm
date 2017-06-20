@@ -160,7 +160,7 @@ It returns like below.
 
 Returned arrayRef is list of changable parts.
 
-    You can get a changed token if you find just 'pre' and 'post' sequences on any other token array.
+You can get a changed token if you find just 'pre' and 'post' sequences on any other token array.
 
 =cut
 
@@ -244,10 +244,13 @@ sub _diff{
 
 =head1 SEE ALSO
 
-=item *
+=over
 
-L<Template::Extract>
-L<Parse::Token::Lite>
+=item L<Template::Extract>
+
+=item L<Parse::Token::Lite>
+
+=back 
 
 =head1 SOURCE
 
@@ -255,7 +258,7 @@ L<https://github.com/sng2c/Template-Reverse>
 
 =head1 THANKS TO
 
-=item https://metacpan.org/author/AMORETTE
+L<https://metacpan.org/author/AMORETTE>
 
 This module is dedicated to AMORETTE.
 He was interested in this module and was cheering me up.

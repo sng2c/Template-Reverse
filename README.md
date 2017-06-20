@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/sng2c/Template-Reverse.svg?branch=master)](https://travis-ci.org/sng2c/Template-Reverse)
+
 # NAME
 
 Template::Reverse - A template generator getting different parts between pair of text
@@ -14,7 +16,8 @@ version 0.143
     my $parts = $rev->detect($arr_ref1, $arr_ref2); # returns [ Template::Reverser::Part, ... ]
 
     use Template::Reverse::Converter::TT2;
-    my @templates = Template::Reverse::TT2Converter::Convert($parts); 
+    my $converter = Template::Reverse::Converter::TT2->new();
+    my @templates = $converter->Convert($parts); 
 
 more
 
@@ -50,7 +53,6 @@ more
 
     my $str3 = "I am king of the world and a richest man";
      
-
     # extract!!
     foreach my $regexp (@{$regexp_list}){
         if( $str3 =~ /$regexp/ ){
@@ -88,8 +90,8 @@ This is used by \_diff() and \_detect().
 
 ### detect($arr\_ref1, $arr\_ref2)
 
-Get an array-ref of [Template::Reverse::Part](http://search.cpan.org/perldoc?Template::Reverse::Part) from two array-refs which contains text or object implements as\_string() method.
-A [Template::Reverse::Part](http://search.cpan.org/perldoc?Template::Reverse::Part) class means an one changable token.
+Get an array-ref of [Template::Reverse::Part](https://metacpan.org/pod/Template::Reverse::Part) from two array-refs which contains text or object implements as\_string() method.
+A [Template::Reverse::Part](https://metacpan.org/pod/Template::Reverse::Part) class means an one changable token.
 
 It returns like below.
 
@@ -139,12 +141,12 @@ It returns like below.
 
 Returned arrayRef is list of changable parts.
 
-    You can get a changed token if you find just 'pre' and 'post' sequences on any other token array.
+You can get a changed token if you find just 'pre' and 'post' sequences on any other token array.
 
 # SEE ALSO
 
-- [Template::Extract](http://search.cpan.org/perldoc?Template::Extract)
-[Parse::Token::Lite](http://search.cpan.org/perldoc?Parse::Token::Lite)
+- [Template::Extract](https://metacpan.org/pod/Template::Extract)
+- [Parse::Token::Lite](https://metacpan.org/pod/Parse::Token::Lite)
 
 # SOURCE
 
@@ -152,7 +154,7 @@ Returned arrayRef is list of changable parts.
 
 # THANKS TO
 
-- https://metacpan.org/author/AMORETTE
+[https://metacpan.org/author/AMORETTE](https://metacpan.org/author/AMORETTE)
 
 This module is dedicated to AMORETTE.
 He was interested in this module and was cheering me up.
@@ -167,3 +169,26 @@ This software is copyright (c) 2012 by HyeonSeung Kim.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
+<<<<<<< HEAD
+=======
+
+# POD ERRORS
+
+Hey! **The above document had some coding errors, which are explained below:**
+
+- Around line 150:
+
+    '=item' outside of any '=over'
+
+- Around line 155:
+
+    You forgot a '=back' before '=head1'
+
+- Around line 161:
+
+    '=item' outside of any '=over'
+
+- Around line 166:
+
+    You forgot a '=back' before '=head1'
+>>>>>>> 82150ef... fix README
