@@ -217,6 +217,13 @@ sub _detect{
     return \@res;
 }
 
+sub partition_by{
+
+}
+
+sub partition{
+    
+}
 
 sub _diff{
     my ($a,$b) = @_;
