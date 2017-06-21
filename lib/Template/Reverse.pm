@@ -11,6 +11,9 @@ use Scalar::Util qw(blessed);
 
 =pod
 
+=head1 CI
+
+=for html <a href="https://travis-ci.org/sng2c/Template-Reverse"><img src="https://travis-ci.org/sng2c/Template-Reverse.svg?branch=master"></a>
 
 =head1 SYNOPSIS
 
@@ -165,8 +168,7 @@ You can get a changed token if you find just 'pre' and 'post' sequences on any o
 =cut
 
 sub detect{
-    my $self = shift;
-    my @strs = @_;
+    my ($self,@strs) = @_;
     my $diff = _diff($strs[0],$strs[1]);
     my $pattern = _detect($diff,$self->sidelen());
     return $pattern;

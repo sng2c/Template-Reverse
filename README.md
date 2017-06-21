@@ -1,12 +1,10 @@
-[![Build Status](https://travis-ci.org/sng2c/Template-Reverse.svg?branch=master)](https://travis-ci.org/sng2c/Template-Reverse)
-
 # NAME
 
 Template::Reverse - A template generator getting different parts between pair of text
 
 # VERSION
 
-version 0.143
+version 0.150
 
 # SYNOPSIS
 
@@ -69,6 +67,12 @@ more
 
 Template::Reverse detects different parts between pair of similar text as merged texts from same template.
 And it can makes an output marked differences, encodes to TT2 format for being use by Template::Extract module.
+
+# CI
+
+<div>
+    <a href="https://travis-ci.org/sng2c/Template-Reverse"><img src="https://travis-ci.org/sng2c/Template-Reverse.svg?branch=master"></a>
+</div>
 
 # FUNCTIONS
 
@@ -176,19 +180,19 @@ the same terms as the Perl 5 programming language system itself.
 
 Hey! **The above document had some coding errors, which are explained below:**
 
-- Around line 150:
+- Around line 154:
 
     '=item' outside of any '=over'
 
-- Around line 155:
+- Around line 159:
 
     You forgot a '=back' before '=head1'
 
-- Around line 161:
+- Around line 165:
 
     '=item' outside of any '=over'
 
-- Around line 166:
+- Around line 170:
 
     You forgot a '=back' before '=head1'
 >>>>>>> 82150ef... fix README
