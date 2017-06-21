@@ -173,26 +173,3 @@ This software is copyright (c) 2012 by HyeonSeung Kim.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
-<<<<<<< HEAD
-=======
-
-# POD ERRORS
-
-Hey! **The above document had some coding errors, which are explained below:**
-
-- Around line 154:
-
-    '=item' outside of any '=over'
-
-- Around line 159:
-
-    You forgot a '=back' before '=head1'
-
-- Around line 165:
-
-    '=item' outside of any '=over'
-
-- Around line 170:
-
-    You forgot a '=back' before '=head1'
->>>>>>> 82150ef... fix README
