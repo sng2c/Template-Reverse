@@ -87,11 +87,6 @@ If you set it as 3, you get max 3 length pre-text and post-text array each part.
 
 This is needed for more faster performance.
 
-### WILDCARD()
-
-WILDCARD() returns a blessed array reference as 'WILDCARD' to means WILDCARD token.
-This is used by \_diff() and \_detect().
-
 ### detect($arr\_ref1, $arr\_ref2)
 
 Get an array-ref of [Template::Reverse::Part](https://metacpan.org/pod/Template::Reverse::Part) from two array-refs which contains text or object implements as\_string() method.

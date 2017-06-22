@@ -2,7 +2,7 @@ use Test::More ;
 use Data::Dump;
 
 BEGIN{
-use_ok("Template::Reverse");
+use_ok("Template::Reverse::Util");
 };
 
 # sub do_diff{
@@ -24,24 +24,22 @@ use_ok("Template::Reverse");
 my @got;
 my @exp;
 @exp = (["A", "B", "C"], ["C", "D", "E"]);
-@got = Template::Reverse::partition(3,2, ('A','B','C','D','E'));
+@got = partition(3,2, ('A','B','C','D','E'));
 is_deeply(\@got, \@exp, 'partition 1');
 
 @exp = (["A", "B", "C"], ["B", "C", "D"], ["C", "D", "E"]);
-@got = Template::Reverse::partition(3, 1, ('A','B','C','D','E'));
+@got = partition(3, 1, ('A','B','C','D','E'));
 is_deeply(\@got, \@exp, 'partition 2');
 
+use constant::Atom qw(WILDCARD);
 
-my $WC = bless {}, 'WILDCARD';
-sub isWildCard{
-	ref $_[0] eq 'WILDCARD';
-}
-@exp = (["A","B"], [$WC], ["C","B"]);
-@got = Template::Reverse::partition_by(\&isWildCard, ('A','B',$WC,'C','B'));
+@exp = (["A","B"], [WILDCARD], ["C","B"]);
+@got = partition_by(sub{$_[0] eq WILDCARD}, ('A','B',WILDCARD,'C','B'));
 is_deeply(\@got, \@exp, 'partition_by 1');
 
 @exp = ([1], [2], [3], [4], [5], [6]);
-@got = Template::Reverse::partition_by(sub{(shift() % 2)==0}, (1,2,3,4,5,6));
+@got = partition_by(sub{(shift() % 2)==0}, (1,2,3,4,5,6));
 is_deeply(\@got, \@exp, 'partition_by 2');
+
 
 done_testing();

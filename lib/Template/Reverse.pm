@@ -1,10 +1,11 @@
 package Template::Reverse;
 
 # ABSTRACT: A template generator getting different parts between pair of text
-
 use Moo;
 use utf8;
+use Template::Reverse::Util;
 use Template::Reverse::Part;
+use constant::Atom qw(WILDCARD BOF EOF);
 use Algorithm::Diff qw(sdiff);
 use Scalar::Util qw(blessed);
 # VERSION
@@ -97,18 +98,6 @@ has 'sidelen' => (
     default => sub{return 10;}
 );
 
-=head3 WILDCARD()
-
-WILDCARD() returns a blessed array reference as 'WILDCARD' to means WILDCARD token.
-This is used by _diff() and _detect().
-
-=cut
-
-my $_WILDCARD = bless [], 'WILDCARD';
-sub WILDCARD{return $_WILDCARD};
-sub _isWILDCARD{
-  return ref $_[0] eq 'WILDCARD';
-}
 
 =head3 detect($arr_ref1, $arr_ref2)
 
@@ -185,7 +174,7 @@ sub _detect{
     my @res;
     for(my $i=0; $i<@d; $i++)
     {
-        if( _isWILDCARD($d[$i] ) )
+        if( WILDCARD == $d[$i] )
         {
             my $from = $lastStar;
             my $to = $i-1;
@@ -198,7 +187,7 @@ sub _detect{
             if( $i+1 < @d ){
                 for( $j=$i+1; $j<@d; $j++)
                 {
-                    if( _isWILDCARD( $d[$j] ) ){
+                    if( WILDCARD == $d[$j] ){
                         last;
                     }
                 }
@@ -217,32 +206,6 @@ sub _detect{
     return \@res;
 }
 
-sub partition{
-    my($len, $step, @list) = @_;
-    my @ret;
-    for(my $i=0; $i<@list-$len+1; $i+=$step){
-        my @sublist = @list[$i..$i+$len-1];
-        push(@ret, \@sublist);
-    }
-    return @ret;
-}
-
-sub partition_by{
-    my($funcref, @list) = @_;
-    my @ret;
-    my $curarr;
-    foreach my $item (@list){
-        if( $funcref->($item) ){
-            push(@ret, $curarr,[$item]);
-            $curarr = [];
-        }
-        else{
-            push(@{$curarr}, $item);
-        }
-    }
-    push(@ret, $curarr) if @{$curarr} > 0;
-    return @ret;
-}
 
 sub _diff{
     my ($a,$b) = @_;
@@ -261,8 +224,8 @@ sub _diff{
             $before = '';
         }
         else{
-            push(@rr,WILDCARD) unless _isWILDCARD($before);
-            $before = WILDCARD;
+            push(@rr,WILDCARD) unless WILDCARD == $before;
+            $before = WILDCARD; 
         }
         $idx++ if $r->[0] ne '+';
         
