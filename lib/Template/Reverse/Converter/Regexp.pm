@@ -19,8 +19,6 @@ sub Convert{
         @post= grep{!ref($_)}@post;
         my $pretxt = join '',@pre;
         my $posttxt = join '',@post;
-        $pretxt .= '' if $pretxt;
-        $posttxt = ''.$posttxt if $posttxt;
 
 		if( $pretxt eq '' || $posttxt eq '' ){
      	   push(@temps,qr!\Q$pretxt\E(.+)\Q$posttxt\E!);
