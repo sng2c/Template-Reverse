@@ -208,16 +208,15 @@ sub _detect{
 
 sub _diff{
     my ($a,$b) = @_;
-    my ($org_a,$org_b) = @_;
     my @d = sdiff($a,$b);
     my @rr;
     my $idx = 0;
     for my $r (@d){
         if( $r->[0] eq 'u' ){
-            push(@rr,$org_a->[$idx]);
+            push(@rr,$a->[$idx]);
         }
         else{
-            push(@rr,WILDCARD) unless WILDCARD == @rr[-1];
+            push(@rr,WILDCARD) unless WILDCARD == $rr[-1];
         }
         $idx++ if $r->[0] ne '+';
     }
