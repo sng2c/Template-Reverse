@@ -42,7 +42,7 @@ sub Convert{
     package Template::Reverse::Converter::Regexp;
     my $tt2 = Template::Reverse::Converter::Regexp->new;
     my $res = $tt2->Convert([{pre=>['The'],post=>['stuff']}]);
-    "The cool stuff" =~ /$res/;
+    "The cool stuff" =~ /$res->[0]/;
     print $1; # "cool"
 
 =cut
