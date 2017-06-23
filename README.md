@@ -4,7 +4,7 @@ Template::Reverse - A template generator getting different parts between pair of
 
 # VERSION
 
-version 0.150
+version 0.200
 
 # SYNOPSIS
 
@@ -87,6 +87,12 @@ If you set it as 3, you get max 3 length pre-text and post-text array each part.
 
 This is needed for more faster performance.
 
+### BOF, EOF
+
+Template::Reverse exports BOF(Begin of file) and EOF(End of file).
+These are needed for more explicit implementation.
+And you can see them return parts
+
 ### detect($arr\_ref1, $arr\_ref2)
 
 Get an array-ref of [Template::Reverse::Part](https://metacpan.org/pod/Template::Reverse::Part) from two array-refs which contains text or object implements as\_string() method.
@@ -95,52 +101,55 @@ A [Template::Reverse::Part](https://metacpan.org/pod/Template::Reverse::Part) cl
 It returns like below.
 
     $rev->detect([qw(A b C)], [qw(A d C)]);
+    # List is converted as below
+    #
+    # qw(A b C) -> (BOF, qw(A b C), EOF)
     # 
-    # [ { ['A'],['C'] } ] <- Please focus at data, not expression.
-    #   : :...: :...: :     
-    #   :  pre  post  :
-    #   :.............:  
-    #       Part #1
+    # [ { [BOF, 'A'],['C', EOF] } ] <- Please focus at data, not expression.
+    #   : :........: :...:      :     
+    #   :  pre       post       :
+    #   :.......................:  
+    #           Part #1
     #
 
     $rev->detect([qw(A b C d E)],[qw(A f C g E)]);
     #
-    # [ { ['A'], ['C'] }, { ['C'], ['E'] } ]
-    #   : :...:  :...: :  : :...:  :...: :
-    #   :  pre   post  :  :  pre   post  :
-    #   :..............:  :..............:
-    #        Part #1          Part #2
+    # [ { [BOF, 'A'], ['C'] }, { ['C'], ['E', EOF] } ]
+    #   : :........:  :...: :  : :...:  :........: :
+    #   :  pre        post  :  :  pre   post       :
+    #   :...................:  :...................:
+    #          Part #1                Part #2
     #
 
     $rev->detect([qw(A1 A2 B C1 C2 D E1 E2)],[qw(A1 A2 D C1 C2 F E1 E2)]);
     #
-    # [ { ['A1','A2'],['C2','C2'] }, { ['C1','C2'], ['E2','E2'] } ]
+    # [ { [BOF,'A1','A2'],['C2','C2'] }, { ['C1','C2'], ['E2','E2',EOF] } ]
     #
 
     my $str1 = [qw"I am perl and smart"];
     my $str2 = [qw"I am KHS and a perlmania"];
     my $parts = $rev->detect($str1, $str2);
     #
-    # [ { ['I','am'], ['and'] } , { ['and'],[] } ]
-    #   : :........:  :.....: :   :            :
-    #   :    pre       post   :   :            :
-    #   :.....................:   :............:
-    #           Part #1               Part #2
+    # [ { [BOF,'I','am'], ['and'] } , { ['and'],[EOF] } ]
+    #   : :............:  :.....: :   :               :
+    #   :      pre         post   :   :               :
+    #   :.........................:   :...............:
+    #              Part #1                  Part #2
     #
 
     # You can get same result for object arrays.
     my $objs1 = [$obj1, $obj2, $obj3];
     my $objs2 = [$obj1, $obj3];
     #
-    # [ { [ $obj1 ], [ $obj3 ] } ]
-    #   : :.......:  :.......: :
-    #   :    pre       post    :
-    #   :......................:
-    #           Part #1
+    # [ { [ BOF,$obj1 ], [ $obj3, EOF ] } ]
+    #   : :...........:  :............: :
+    #   :      pre            post      :
+    #   :...............................:
+    #                Part #1
 
-Returned arrayRef is list of changable parts.
+Returned arrayRef is list of detected changing parts.
 
-You can get a changed token if you find just 'pre' and 'post' sequences on any other token array.
+You can get a changed token if you find just 'pre' and 'post' parts on splited target.
 
 # SEE ALSO
 

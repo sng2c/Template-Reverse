@@ -37,9 +37,15 @@ use constant::Atom qw(WILDCARD);
 @got = partition_by(sub{$_[0] eq WILDCARD}, ('A','B',WILDCARD,'C','B'));
 is_deeply(\@got, \@exp, 'partition_by 1');
 
+
+@exp = ([WILDCARD], ["C","B"]);
+@got = partition_by(sub{$_[0] eq WILDCARD}, (WILDCARD,'C','B'));
+is_deeply(\@got, \@exp, 'partition_by 2');
+
+
 @exp = ([1], [2], [3], [4], [5], [6]);
 @got = partition_by(sub{(shift() % 2)==0}, (1,2,3,4,5,6));
-is_deeply(\@got, \@exp, 'partition_by 2');
+is_deeply(\@got, \@exp, 'partition_by 3');
 
 
 done_testing();

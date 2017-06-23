@@ -12,11 +12,11 @@ sub Convert{
     my @temps;
 
     foreach my $pat (@{$parts}){
-        my @pre = @{$pat->pre};
-        my @post = @{$pat->post};
+        my @pre = @{$pat->{pre}};
+        my @post = @{$pat->{post}};
 
-        @pre = map{blessed($_)?$_->as_string:$_}@pre;
-        @post= map{blessed($_)?$_->as_string:$_}@post;
+        @pre = grep{!ref($_)}@pre;
+        @post= grep{!ref($_)}@post;
         my $pretxt = join '',@pre;
         my $posttxt = join '',@post;
         $pretxt .= '' if $pretxt;

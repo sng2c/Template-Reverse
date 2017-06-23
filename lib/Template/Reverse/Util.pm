@@ -1,8 +1,8 @@
 package Template::Reverse::Util;
 
 require Exporter;
-@ISA = qw(Exporter);
-@EXPORT = qw(partition partition_by);
+our @ISA='Exporter';
+our @EXPORT = qw(partition partition_by);
 
 sub partition{
     my($len, $step, @list) = @_;
@@ -20,7 +20,12 @@ sub partition_by{
     my $curarr;
     foreach my $item (@list){
         if( $funcref->($item) ){
-            push(@ret, $curarr,[$item]);
+            if($curarr){
+                push(@ret, $curarr,[$item]);
+            }
+            else{
+                push(@ret, [$item]);   
+            }
             $curarr = [];
         }
         else{
