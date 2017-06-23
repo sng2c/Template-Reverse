@@ -3,7 +3,6 @@ use Test::More;
 BEGIN{
 use_ok('Template::Reverse');
 }
-use Data::Dumper ;
 sub detect{
     my $diff= shift;
     my $r = Template::Reverse::_detect($diff, 3);

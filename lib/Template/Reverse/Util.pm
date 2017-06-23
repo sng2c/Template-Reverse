@@ -1,9 +1,13 @@
 package Template::Reverse::Util;
 
+# ABSTRACT: Utils
+
 require Exporter;
 our @ISA='Exporter';
 our @EXPORT = qw(partition partition_by);
+# VERSION
 
+# port from Clojure
 sub partition{
     my($len, $step, @list) = @_;
     my @ret;
@@ -14,6 +18,7 @@ sub partition{
     return @ret;
 }
 
+# port from Clojure
 sub partition_by{
     my($funcref, @list) = @_;
     my @ret;

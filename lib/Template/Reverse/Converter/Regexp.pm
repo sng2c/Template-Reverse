@@ -3,7 +3,6 @@ package Template::Reverse::Converter::Regexp;
 # ABSTRACT: Convert parts to Regular Expression simply
 
 use Moo;
-use Scalar::Util qw(blessed);
 use utf8;
 # VERSION
 
@@ -42,9 +41,9 @@ sub Convert{
     
     package Template::Reverse::Converter::Regexp;
     my $tt2 = Template::Reverse::Converter::Regexp->new;
-    my $res = $tt2->Convert([[['pretext'],['posttext']]]);
-	"Some text" =~ /$res/;
-	print $1;
+    my $res = $tt2->Convert([{pre=>['The'],post=>['stuff']}]);
+    "The cool stuff" =~ /$res/;
+    print $1; # "cool"
 
 =cut
 

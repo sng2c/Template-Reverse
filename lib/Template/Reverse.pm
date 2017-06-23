@@ -6,8 +6,6 @@ use utf8;
 use Template::Reverse::Util;
 use constant::Atom qw(WILDCARD BOF EOF);
 use Algorithm::Diff qw(sdiff);
-use Scalar::Util qw(blessed);
-use Data::Dumper;
 use List::Util qw(max min);
 require Exporter;
 our @ISA = 'Exporter';

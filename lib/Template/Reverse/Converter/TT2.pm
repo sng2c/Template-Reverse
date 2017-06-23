@@ -3,7 +3,7 @@ package Template::Reverse::Converter::TT2;
 # ABSTRACT: Convert parts to TT2 format simply
 
 use Moo;
-use Scalar::Util qw(blessed);
+use utf8;
 # VERSION
 
 sub Convert{
@@ -33,9 +33,11 @@ sub Convert{
 
 =head1 SYNOPSIS
     
-    package Template::Reverse::Converter::TT2;
+    use Data::Dumper;
+    use Template::Reverse::Converter::TT2;
     my $tt2 = Template::Reverse::Converter::TT2->new;
-    $tt2->Convert([[['pretext'],['posttext']]]);
+    my $templates = $tt2->Convert([{pre=>['The'],post=>['stuff']}]);
+    print Dumper $templates; # [ 'The[% value %]stuff' ];
 
 =cut
 
