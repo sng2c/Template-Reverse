@@ -21,11 +21,9 @@ sub partition_by{
     foreach my $item (@list){
         if( $funcref->($item) ){
             if($curarr){
-                push(@ret, $curarr,[$item]);
+                push(@ret, $curarr);
             }
-            else{
-                push(@ret, [$item]);   
-            }
+            push(@ret, [$item]);   
             $curarr = [];
         }
         else{

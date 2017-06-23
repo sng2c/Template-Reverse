@@ -122,8 +122,8 @@ It returns like below.
     # qw(A b C) -> (BOF, qw(A b C), EOF)
     # 
     # [ { [BOF, 'A'],['C', EOF] } ] <- Please focus at data, not expression.
-    #   : :........: :...:      :     
-    #   :  pre       post       :
+    #   : :........: :..,,,,,.: :     
+    #   :     pre       post    :
     #   :.......................:  
     #           Part #1
     #
@@ -132,7 +132,7 @@ It returns like below.
     #
     # [ { [BOF, 'A'], ['C'] }, { ['C'], ['E', EOF] } ]
     #   : :........:  :...: :  : :...:  :........: :
-    #   :  pre        post  :  :  pre   post       :
+    #   :  pre        post  :  :  pre      post    :
     #   :...................:  :...................:
     #          Part #1                Part #2
     #
@@ -164,6 +164,14 @@ It returns like below.
     #                Part #1
 
 Returned arrayRef is list of detected changing parts.
+
+Actually, the returned value is like below.
+
+    [ 
+        {pre=>[BOF, ...], post=>[...]},
+        ...
+        {pre=>[...], post=>[..., EOF]},
+    ]
 
 You can get a changed token if you find just 'pre' and 'post' parts on splited target.
 
@@ -209,7 +217,7 @@ sub _diff{
             push(@rr,$org_a->[$idx]);
         }
         else{
-            push(@rr,WILDCARD) unless WILDCARD == @rr[@rr-1];
+            push(@rr,WILDCARD) unless WILDCARD == @rr[-1];
         }
         $idx++ if $r->[0] ne '+';
     }
